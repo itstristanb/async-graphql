@@ -179,7 +179,8 @@ pub type ServerResult<T> = std::result::Result<T, ServerError>;
 #[derive(Debug)]
 pub struct InputValueError<T> {
     message: String,
-    extensions: Option<ErrorExtensionValues>,
+    /// Optional extensions for additional error context
+    pub extensions: Option<ErrorExtensionValues>,
     phantom: PhantomData<T>,
 }
 
@@ -188,7 +189,7 @@ impl<T: InputType> InputValueError<T> {
         Self {
             message,
             extensions,
-            phantom: PhantomData,
+            phantom: PhantomData
         }
     }
 
@@ -213,7 +214,7 @@ impl<T: InputType> InputValueError<T> {
     pub fn custom(msg: impl Display) -> Self {
         Self::new(
             format!(r#"Failed to parse "{}": {}"#, T::type_name(), msg),
-            None,
+            None
         )
     }
 
