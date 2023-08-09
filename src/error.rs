@@ -185,7 +185,7 @@ pub struct InputValueError<T> {
 }
 
 impl<T: InputType> InputValueError<T> {
-    fn new(message: String, extensions: Option<ErrorExtensionValues>) -> Self {
+    pub fn new(message: String, extensions: Option<ErrorExtensionValues>) -> Self {
         Self {
             message,
             extensions,
@@ -194,7 +194,6 @@ impl<T: InputType> InputValueError<T> {
     }
 
     /// The expected input type did not match the actual input type.
-    #[must_use]
     pub fn expected_type(actual: Value) -> Self {
         Self::new(
             format!(
@@ -210,7 +209,6 @@ impl<T: InputType> InputValueError<T> {
     ///
     /// Any type that implements `Display` is automatically converted to this if
     /// you use the `?` operator.
-    #[must_use]
     pub fn custom(msg: impl Display) -> Self {
         Self::new(
             format!(r#"Failed to parse "{}": {}"#, T::type_name(), msg),
